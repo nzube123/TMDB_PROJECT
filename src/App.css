@@ -32,7 +32,26 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+/* quiz site */
+.movie_title {
+  color: black;
+  font-weight: 800;
+}
+.App{
+  overflow-x: auto;
+}
+.poster_img {
+  width: 200px;
+}
+.picture_cont{
+  display: flex;
+}
+.indiv_div{
+  margin: 5px;
 }
