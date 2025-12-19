@@ -1,13 +1,14 @@
-body{
+body {
   background-color: grey;
 }
+
 .movie_title {
   color: black;
   font-weight: 800;
 }
 
 .App {
-  overflow-x: auto;
+  overflow: auto;
 }
 
 .poster_img {
@@ -30,21 +31,21 @@ h1 {
 }
 
 .LoadButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  padding: 10px;
+  padding: 5px 0px 5px 0px;
+  width: 10%;
+  text-align: center;
   border-radius: 10px;
-  background: black;
-  color: white;
-  font-weight: 600;
+  font: bold, 20px;
+  background: grey;
   margin-left: 50%;
+  border: 1px solid black;
 }
-.details{
+
+.details {
   margin-left: 30%;
   width: 50%;
 }
-.center{
+
+.center {
   margin-left: 250px;
 }

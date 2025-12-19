@@ -4,37 +4,34 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
 import './App.css'
 
+// main page which displays the popular movies
 function MainPage() {
     const [page, setPage] = useState(1);
     const getMovie = async ({pageParams = page} = {}) => {
-        const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=0021b5a28c9efe4011629cc1f6c2f89e&page=${pageParams}`).catch(err => console.error(err));
+        const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=0021b5a28c9efe4011629cc1f6c2f89e&page=${pageParams}?limit=10`).catch(err => console.error(err));
         return res.json();
     }
 
     console.log(getMovie());
-    const { data: displayMovie, err,  fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+    // infinte query to fetch paginated data / movies
+    const { data: displayMovie, isError,  fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ['movie'],
         queryFn: getMovie,
         initialPageParam: 1,
+        // arror function to get the nextpage and if it doesnt exist return undefined
         getNextPageParam: (lastPage) => {
-            // const nextPage = allPages.length + 1;
             const currentPage = lastPage.page;
             const totalPages = lastPage.total_pages;
             if (currentPage < totalPages) {
                 return currentPage + 1;
             }
-            
             return undefined;
         }
-    })
-    console.log(displayMovie);
-    console.log(displayMovie?.adult);
-
-
-    if (err) {
-        console.log(err);
+    });
+    if (isError) {
+        throw new Error("There is no internet connection");
+        
     }
-
 
     // handle page change
     function handleClick() {
@@ -45,10 +42,8 @@ function MainPage() {
 
     return (
         <>
-            {/* <button onClick={() => getMovie()}>ADD me</button> */}
             <section>
                 <h1>Popular Movies</h1>
-                
                     <div className='App'>
                         {displayMovie?.pages.map((page, i) => (
                             <div key={i} className='picture_cont'>
@@ -64,7 +59,7 @@ function MainPage() {
                     </div>
 
                 <button className="LoadButton" onClick={() => handleClick()}>
-                    <b><i>{isFetchingNextPage ? 'Loading...' : hasNextPage ? 'loadmore' : 'No more movies to load'}</i></b>
+                    <b>{isFetchingNextPage ? 'Loading...' : hasNextPage ? '+ loadmore' : 'No more movies to load'}</b>
                 </button>
             </section>
 
@@ -113,8 +108,7 @@ export default function Display() {
     return (
         <section>
             <BrowserRouter>
-            {/* <Link to={'/'}> Home </Link> */}
-
+            
             <Routes>
                 <Route path='/' element={<MainPage />}/>
                 <Route path='/details/:id' element={<Details />}/>
