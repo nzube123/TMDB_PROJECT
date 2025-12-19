@@ -1,9 +1,10 @@
 
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
 import './App.css'
 
-export default function Display() {
+function MainPage() {
     const [page, setPage] = useState(1);
     const getMovie = async ({pageParams = page} = {}) => {
         const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=0021b5a28c9efe4011629cc1f6c2f89e&page=${pageParams}`).catch(err => console.error(err));
@@ -47,22 +48,78 @@ export default function Display() {
             {/* <button onClick={() => getMovie()}>ADD me</button> */}
             <section>
                 <h1>Popular Movies</h1>
-                <div className='App'>
-                    {displayMovie?.pages.map((page, i) => (
-                        <div key={i} className='picture_cont'>
-                            {page?.results.map((movies) => (
-                                <div key={movies.id} className='indiv_div'>
-                                    <img src={`https://image.tmdb.org/t/p/w500${movies.poster_path}`} alt={movies.title} className='poster_img' />
-                                    <p className='movie_title'>{movies.title}</p>
-                                </div>))}
-                        </div>
-                    ))}
-                </div>
-                <button onClick={() => handleClick()}>
-                    {isFetchingNextPage ? 'Loading...' : hasNextPage ? 'loadmore' : 'No more movies to load'}
+                
+                    <div className='App'>
+                        {displayMovie?.pages.map((page, i) => (
+                            <div key={i} className='picture_cont'>
+                                {page?.results.map((movies) => (
+                                    <div key={movies.id} className='indiv_div'>
+                                        <Link to={`/details/${movies.id}`}>
+                                            <img src={`https://image.tmdb.org/t/p/w500${movies.poster_path}`} alt={movies.title} className='poster_img' />
+                                            <p className='movie_title'>{movies.title}</p>
+                                        </Link>
+                                    </div>))}
+                            </div>
+                        ))}
+                    </div>
+
+                <button className="LoadButton" onClick={() => handleClick()}>
+                    <b><i>{isFetchingNextPage ? 'Loading...' : hasNextPage ? 'loadmore' : 'No more movies to load'}</i></b>
                 </button>
             </section>
 
         </>
+    )
+}
+
+
+
+// the details page of this site
+function Details() {
+    const { id: movie_id} = useParams();
+    const [movie, setMovie] = useState(null);
+    useEffect(() => {
+        // fetch movie details based on id from params
+        const fetchData = async () => {
+            // fetch the same data from the movie api but for a single movie based on id
+            const res = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=0021b5a28c9efe4011629cc1f6c2f89e`).catch(err => console.error(err));
+            const data = await res.json();
+            setMovie(data);
+            console.log(data);
+            
+        }
+        fetchData();
+    }, [movie_id]);
+
+    return (
+        <section className='details'>
+            <h1>{movie?.title} - <Link to={'/'}>Go back</Link></h1>
+            <img src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`} className='poster_img center' alt="" />
+            <div>
+                <p><b>Overview:</b> {movie?.overview}</p>
+                <p><b>Release Date:</b> {movie?.release_date}</p>
+                <p><b>Rating:</b> {movie?.vote_average} / 10</p>
+                <p><b>Popularity:</b> {movie?.popularity}</p>
+            </div>
+        </section>
+    )
+}
+
+
+
+
+// Routing pages
+export default function Display() {
+    return (
+        <section>
+            <BrowserRouter>
+            {/* <Link to={'/'}> Home </Link> */}
+
+            <Routes>
+                <Route path='/' element={<MainPage />}/>
+                <Route path='/details/:id' element={<Details />}/>
+            </Routes>
+            </BrowserRouter>
+        </section>
     )
 }

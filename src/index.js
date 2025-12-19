@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Display from './movie';
 import reportWebVitals from './reportWebVitals';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Display from './movie';
+// import { ro } from "react-router-dom";
 
 const client = new QueryClient();
 
