@@ -36,9 +36,11 @@ h1 {
   text-align: center;
   border-radius: 10px;
   font: bold, 20px;
-  background: grey;
+  background: gray;
   margin-left: 50%;
   border: 1px solid black;
+  position: fixed;
+  bottom: 10px;
 }
 
 .details {
