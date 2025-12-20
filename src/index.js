@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Display from './movie';
-// import { ro } from "react-router-dom";
+import AppRoutes from './routes/routes';
 
 const client = new QueryClient();
 
@@ -12,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={client} >
-      <Display />
+      <AppRoutes />
     </QueryClientProvider>
   </React.StrictMode>
 );
