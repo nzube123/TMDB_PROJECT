@@ -1,9 +1,11 @@
 body {
   background-color: #282c34;
 }
-.link{
+
+.link {
   text-decoration: none;
 }
+
 .movie_title {
   text-decoration: none;
   color: black;
@@ -28,7 +30,8 @@ body {
   padding: 10px;
   border-radius: 10px;
 }
-h1{
+
+h1 {
   color: white;
 }
 
@@ -46,30 +49,36 @@ h1{
 
 .details {
   padding: 20px;
-  width: 80%;
+  width: 100%;
   /* border: 1px solid white */
 }
-.title-cont{
+
+.title-cont {
   margin-left: 20px;
 }
+
 .poster_img {
   width: 170px;
   border-radius: 10px;
 }
+
 .movie_details {
   word-spacing: 2px;
   padding: 10px;
   color: white;
   font-size: 12px;
 }
+
 .movie_details b {
   font-size: 12px;
 }
-.fade{
+
+.fade {
   color: grey;
   font-size: 10px;
 }
-.poster_div{
+
+.poster_div {
   display: flex;
   /* gap: 20px; */
   align-items: center;
@@ -91,6 +100,7 @@ h1{
   font-size: 30px;
   font-family: Arial, Helvetica, sans-serif;
 }
+
 .input_cont {
   width: 70%;
   background-color: #282c34;
@@ -132,4 +142,33 @@ input:focus {
   font-size: 15px;
   font-family: Arial, Helvetica, sans-serif;
   padding-top: 20px;
+}
+.cast{
+  margin-top: 20px;
+  background-color: #4b5b790c;
+}
+
+.cast_details {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  width: 100%;
+}
+
+.item_cast {
+  padding: 5px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cast_profile {
+  width: 40%;
+  border-radius: 50px;
+  margin-left: 20px;
+}
+.side_details{
+  width: 60%;
+  margin-left: 20px;
+  font-size: 15px;
 }
